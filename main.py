@@ -49,9 +49,10 @@ def apply_compressor(audio, threshold=-20, ratio=2, label=""):
     return audio
 
 def apply_distortion(audio, gain_db=20, label=""):
-    audio = audio.apply_gain(gain_db).clip(-1.0, 1.0)
+    audio = audio.apply_gain(gain_db)  # Removed .clip()
+    audio = normalize(audio)           # normalize to prevent clipping
     if label:
-        print(f"{label}: distortion applied (gain {gain_db} dB)")
+        print(f"{label}: distortion applied (gain {gain_db} dB, normalized)")
     return audio
 
 def duplicate(audio, times=1, label=""):
